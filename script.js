@@ -115,7 +115,6 @@ $(document).ready(function () {
 // }, 1000);
 
 const saveProfile = async () => {
-
   const profile = {
     name: document.getElementById("name").value,
     email: document.getElementById("email").value,
@@ -130,8 +129,6 @@ const saveProfile = async () => {
       body: JSON.stringify(profile),
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*", // Adjust as needed
-        "Access-Control-Allow-Headers": "*", // Adjust as needed
       },
     }
   );
@@ -143,13 +140,13 @@ const saveProfile = async () => {
     console.error("Error saving profile:", json);
     // Handle setting errors or empty fields in your frontend state as needed
   }
-
 };
 
 document.getElementById("profileForm").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent default form submission
   saveProfile(); // Call your custom function to handle the submission
 });
+
 
 const fetchProfile = async () => {
   try {

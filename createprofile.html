@@ -30,6 +30,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Profile Information</div>
         <div class="panel-body">
+          <form id="profileForm">
           <div class="form-group">
             <label for="name">Name:</label>
             <input
@@ -66,7 +67,8 @@
               placeholder="Enter your password"
             />
           </div>
-          <button type="submit" class="btn btn-primary">Save Profile</button>
+          <button type="submit" class="btn btn-primary onclick="saveProfile()">Save Profile</button>
+        </form>
         </div>
       </div>
     </div>

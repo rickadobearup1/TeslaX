@@ -125,7 +125,7 @@ const saveProfile = async () => {
   };
 
   const response = await fetch(
-    "https://your-backend-url.com/create-profile", // Replace with your actual backend URL
+    "https://teslaxapi.onrender.com/api/profile", // Replace with your actual backend URL
     {
       method: "POST",
       body: JSON.stringify(profile),
@@ -147,6 +147,11 @@ const saveProfile = async () => {
 
   setLoading(false);
 };
+
+document.getElementById("profileForm").addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent default form submission
+  saveProfile(); // Call your custom function to handle the submission
+});
 
 const fetchProfile = async () => {
   try {

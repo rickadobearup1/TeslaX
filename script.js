@@ -151,7 +151,7 @@ document.getElementById("profileForm").addEventListener("submit", function (even
 const fetchProfile = async () => {
   try {
     const response = await fetch(
-      "https://your-backend-url.com/api/profile"
+      "https://teslaxapi.onrender.com/api/profile"
       // Replace "your-backend-url.com" with the actual URL of your backend
     );
 

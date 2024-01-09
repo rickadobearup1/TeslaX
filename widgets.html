@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TeslaX - Profile</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/datepicker3.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <!--Custom Font-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#sidebar-collapse"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="dashboard.html"
+            ><span>Lumino</span>Admin</a
+          >
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+      <div class="profile-sidebar">
+        <div class="profile-userpic">
+          <img
+            src="http://placehold.it/50/30a5ff/fff"
+            class="img-responsive"
+            alt=""
+          />
+        </div>
+        <div class="profile-usertitle">
+          <div class="profile-usertitle-name">Username</div>
+          <div class="profile-usertitle-status">
+            <span class="indicator label-success"></span>Online
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="divider"></div>
+      <form role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" />
+        </div>
+      </form>
+      <ul class="nav menu">
+        <li>
+          <a href="index.html"
+            ><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a
+          >
+        </li>
+        <li class="active">
+          <a href="widgets.html"
+            ><em class="fa fa-calendar">&nbsp;</em> Profile</a
+          >
+        </li>
+
+        <li>
+          <a href="login.html"
+            ><em class="fa fa-power-off">&nbsp;</em> Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+    <!--/.sidebar-->
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+      <div class="row">
+        <ol class="breadcrumb">
+          <li>
+            <a href="#">
+              <em class="fa fa-home"></em>
+            </a>
+          </li>
+          <li class="active">Profile</li>
+        </ol>
+      </div>
+      <!--/.row-->
+
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">Profile</h1>
+        </div>
+      </div>
+      <!--/.row-->
+
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Profile Information -->
+          <div class="panel panel-default">
+            <div class="panel-heading">Profile Information</div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="amount">Amount:</label>
+                <p class="form-control-static" id="amount-display">
+                  <!-- Amount from backend -->
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Enter your password"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Save Profile
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default articles">
+              <div class="panel-heading">Latest News</div>
+              <div class="panel-body articles-container">
+                <div class="article border-bottom">
+                  <div class="col-xs-12">
+                    <div class="row">
+                      <div class="col-xs-2 col-md-2 date">
+                        <div class="large">03</div>
+                        <div class="text-muted">Jan</div>
+                      </div>
+                      <div class="col-xs-10 col-md-10">
+                        <h4><a href="#">Happy New Year</a></h4>
+                        <p>
+                          Tesla stock, is hot at the moment, moving up by 20%
+                          what a way to start the new year.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <!--End .article-->
+
+                <div class="article border-bottom">
+                  <div class="col-xs-12">
+                    <div class="row">
+                      <div class="col-xs-2 col-md-2 date">
+                        <div class="large">28</div>
+                        <div class="text-muted">Nov</div>
+                      </div>
+                      <div class="col-xs-10 col-md-10">
+                        <h4><a href="#">Don't Sell</a></h4>
+                        <p>
+                          There are fears, but don't sell your stock. You won't
+                          regret keeping your stock
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <!--End .article-->
+              </div>
+            </div>
+            <!--End .articles-->
+
+            <div class="panel panel-default">
+              <div class="panel-heading">Progress bars</div>
+              <div class="panel-body">
+                <div class="col-md-12 no-padding">
+                  <div class="row progress-labels">
+                    <div class="col-sm-6">
+                      This is where you see how much your stock has grown, we
+                      update it weekly. check back in another week.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default chat">
+              <div class="panel-heading">Chat</div>
+              <div class="panel-body">
+                <ul>
+                  <li class="left clearfix">
+                    <span class="chat-img pull-left">
+                      <img
+                        src="http://placehold.it/60/30a5ff/fff"
+                        alt="User Avatar"
+                        class="img-circle"
+                      />
+                    </span>
+                    <div class="chat-body clearfix">
+                      <div class="header">
+                        <strong class="primary-font">Chat Bot</strong>
+                        <small class="text-muted">few mins ago</small>
+                      </div>
+                      <p>
+                        Your profile has been created, you will earn start
+                        earning in few days.
+                      </p>
+                    </div>
+                  </li>
+
+                  <!-- <li class="left clearfix">
+                  <span class="chat-img pull-left">
+                    <img
+                      src="http://placehold.it/60/30a5ff/fff"
+                      alt="User Avatar"
+                      class="img-circle"
+                    />
+                  </span>
+                  <div class="chat-body clearfix">
+                    <div class="header">
+                      <strong class="primary-font">John Doe</strong>
+                      <small class="text-muted">32 mins ago</small>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac
+                      nunc.
+                    </p>
+                  </div>
+                </li> -->
+                </ul>
+              </div>
+              <div class="panel-footer">
+                <!-- <div class="input-group">
+                <input
+                  id="btn-input"
+                  type="text"
+                  class="form-control input-md"
+                  placeholder="Type your message here..."
+                /><span class="input-group-btn">
+                  <button class="btn btn-primary btn-md" id="btn-chat">
+                    Send
+                  </button>
+                </span>
+              </div> -->
+              </div>
+            </div>
+          </div>
+          <!--/.col-->
+
+          <div class="panel panel-default">
+            <div class="panel-heading">Timeline</div>
+            <div class="panel-body timeline-container">
+              <ul class="timeline">
+                <li>
+                  <div class="timeline-badge">
+                    <i class="glyphicon glyphicon-pushpin"></i>
+                  </div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">Created</h4>
+                    </div>
+                    <div class="timeline-body">
+                      <p>Your profile has been created.</p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-badge primary">
+                    <i class="glyphicon glyphicon-link"></i>
+                  </div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">In progress</h4>
+                    </div>
+                    <div class="timeline-body">
+                      <p>You can start earning soon.</p>
+                    </div>
+                  </div>
+                </li>
+                <!-- <li>
+                  <div class="timeline-badge">
+                    <i class="glyphicon glyphicon-camera"></i>
+                  </div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">Lorem ipsum dolor sit amet</h4>
+                    </div>
+                    <div class="timeline-body">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Integer at sodales nisl. Donec malesuada orci ornare
+                        risus finibus feugiat.
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="timeline-badge">
+                    <i class="glyphicon glyphicon-paperclip"></i>
+                  </div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">Lorem ipsum dolor sit amet</h4>
+                    </div>
+                    <div class="timeline-body">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </p>
+                    </div>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Contact Form
+              <ul class="pull-right panel-settings panel-button-tab-right">
+                <li class="dropdown">
+                  <a
+                    class="pull-right dropdown-toggle"
+                    data-toggle="dropdown"
+                    href="#"
+                  >
+                    <em class="fa fa-cogs"></em>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <ul class="dropdown-settings">
+                        <li>
+                          <a href="#">
+                            <em class="fa fa-cog"></em> Settings 1
+                          </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                          <a href="#">
+                            <em class="fa fa-cog"></em> Settings 2
+                          </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                          <a href="#">
+                            <em class="fa fa-cog"></em> Settings 3
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span
+                class="pull-right clickable panel-toggle panel-button-tab-left"
+                ><em class="fa fa-toggle-up"></em
+              ></span>
+            </div>
+            <div class="panel-body">
+              <form class="form-horizontal" action="" method="post">
+                <fieldset>
+                  <!-- Name input-->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="name"
+                      >Name</label
+                    >
+                    <div class="col-md-9">
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Email input-->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="email"
+                      >Your E-mail</label
+                    >
+                    <div class="col-md-9">
+                      <input
+                        id="email"
+                        name="email"
+                        type="text"
+                        placeholder="Your email"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Message body -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label" for="message"
+                      >Your message</label
+                    >
+                    <div class="col-md-9">
+                      <textarea
+                        class="form-control"
+                        id="message"
+                        name="message"
+                        placeholder="Please enter your message here..."
+                        rows="5"
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Form actions -->
+                  <div class="form-group">
+                    <div class="col-md-12 widget-right">
+                      <button
+                        type="submit"
+                        class="btn btn-default btn-md pull-right"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-12">
+          <p class="back-link">
+            Lumino Theme by <a href="https://www.medialoot.com">Medialoot</a>
+          </p>
+        </div>
+      </div>
+      <!--/.row-->
+    </div>
+    <!--/.main-->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Code inside this block will run when the DOM is fully loaded
+        fetchProfile();
+      });
+    </script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/chart.min.js"></script>
+    <script src="js/chart-data.js"></script>
+    <script src="js/easypiechart.js"></script>
+    <script src="js/easypiechart-data.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>

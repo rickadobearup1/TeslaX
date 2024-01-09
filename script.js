@@ -115,7 +115,6 @@ $(document).ready(function () {
 // }, 1000);
 
 const saveProfile = async () => {
-  setLoading(true);
 
   const profile = {
     name: document.getElementById("name").value,
@@ -145,7 +144,6 @@ const saveProfile = async () => {
     // Handle setting errors or empty fields in your frontend state as needed
   }
 
-  setLoading(false);
 };
 
 document.getElementById("profileForm").addEventListener("submit", function (event) {

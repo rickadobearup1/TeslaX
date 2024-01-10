@@ -115,111 +115,121 @@ $(document).ready(function () {
 // }, 1000);
 
 document.addEventListener("DOMContentLoaded", function () {
-  const loginForm = document.getElementById("loginForm");
-  const loginBtn = document.getElementById("loginBtn");
-  const loadingSpinner = document.getElementById("loadingSpinner");
+  // Check if the current page is the login page
+  if (window.location.pathname === "/login.html") {
+    const loginForm = document.getElementById("loginForm");
+    const loginBtn = document.getElementById("loginBtn");
+    const loadingText = document.getElementById("loadingText");
 
-  // Check if user has 'remember' cookie, and if so, redirect to dashboard
-  const rememberMe = getCookie("remember");
-  if (rememberMe === "true") {
-    window.location.href = "dashboard.html";
-  }
+    // Check if user has 'remember' cookie, and if so, redirect to dashboard
+    const rememberMe = getCookie("remember");
+    if (rememberMe === "true") {
+      window.location.href = "dashboard.html";
+    }
 
-  loginBtn.addEventListener("click", async function () {
-    console.log("Clicked");
-    // Show loading spinner
-    loadingSpinner.style.display = "inline-block";
-    console.log("Spinner shown");
+    loginBtn.addEventListener("click", async function () {
+      console.log("Clicked");
 
-    // Simulate fetching data from the database (replace with your actual API call)
-    try {
-      const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-      const data = await response.json();
+      // Show loading text and hide login button
+      loadingText.style.display = "inline-block";
+      loginBtn.style.display = "none";
 
-      // Simulate checking login credentials
-      const email = loginForm.email.value;
-      const password = loginForm.password.value;
-      const isValidLogin = data.some(user => user.email === email && user.password === password);
+      // Simulate fetching data from the database (replace with your actual API call)
+      try {
+        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+        const data = await response.json();
 
-      if (isValidLogin) {
-        // Set 'remember' cookie if 'Remember Me' is checked
-        const rememberCheckbox = document.getElementById("rememberCheckbox");
-        if (rememberCheckbox && rememberCheckbox.checked) {
-          setCookie("remember", "true", 14); // Cookie expires in 14 days
+        // Simulate checking login credentials
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
+        const isValidLogin = data.some(user => user.email === email && user.password === password);
+
+        if (isValidLogin) {
+          // Set 'remember' cookie if 'Remember Me' is checked
+          const rememberCheckbox = document.getElementById("rememberCheckbox");
+          if (rememberCheckbox && rememberCheckbox.checked) {
+            setCookie("remember", "true", 14); // Cookie expires in 14 days
+          }
+
+          window.location.href = "dashboard.html";
+        } else {
+          alert("Invalid login credentials");
         }
-
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Invalid login credentials");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        // Hide loading text and show login button
+        loadingText.style.display = "none";
+        loginBtn.style.display = "inline-block";
+        console.log("Login button and loading text restored");
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      loadingSpinner.style.display = "none";
-      console.log("Spinner shown");
+    });
+
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
-  });
 
-  // Function to set a cookie
-  function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  }
-
-  // Function to get the value of a cookie
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(name + "=")) {
-        return cookie.substring(name.length + 1);
+    // Function to get the value of a cookie
+    function getCookie(name) {
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookies = decodedCookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1);
+        }
       }
+      return "";
     }
-    return "";
   }
 });
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  function updateNewUsers() {
+  // Check if the current page is the dashboard page
+  if (window.location.pathname === "/dashboard.html") {
+    function updateNewUsers() {
       const newUsersElement = document.getElementById("newUsers");
       const randomValue = Math.floor(Math.random() * (40 - 4 + 1) + 4);
       newUsersElement.textContent = randomValue.toLocaleString();
-  }
+    }
 
-  function updateReviews() {
+    function updateReviews() {
       const reviewsElement = document.getElementById("reviews");
       const currentReviews = parseInt(reviewsElement.textContent);
       reviewsElement.textContent = (currentReviews + 3).toLocaleString();
-  }
+    }
 
-  function updateTotalUsers() {
+    function updateTotalUsers() {
       const totalUsersElement = document.getElementById("totalUsers");
       const currentTotalUsers = parseFloat(totalUsersElement.textContent.replace(/,/g, ''));
       const incrementValue = Math.random() < 0.5 ? 20 : 50;
       const newTotalUsers = (currentTotalUsers + incrementValue).toLocaleString();
       totalUsersElement.textContent = newTotalUsers;
-  }
+    }
 
-  function updatePageViews() {
+    function updatePageViews() {
       const pageViewsElement = document.getElementById("pageViews");
       const currentPageViews = parseFloat(pageViewsElement.textContent.replace(/,/g, ''));
       pageViewsElement.textContent = (currentPageViews + 15200).toLocaleString();
+    }
+
+    updateNewUsers();
+    updateReviews();
+    updateTotalUsers();
+    updatePageViews();
+
+    setInterval(updateNewUsers, 4 * 24 * 60 * 60 * 1000); // 4 days
+    setInterval(updateReviews, 17 * 24 * 60 * 60 * 1000); // 17 days
+    setInterval(updateTotalUsers, 3 * 24 * 60 * 60 * 1000); // 3 days
+    setInterval(updatePageViews, 7 * 24 * 60 * 60 * 1000); // 7 days
   }
-
-  updateNewUsers();
-  updateReviews();
-  updateTotalUsers();
-  updatePageViews();
-
-  setInterval(updateNewUsers, 4 * 24 * 60 * 60 * 1000); // 4 days
-  setInterval(updateReviews, 17 * 24 * 60 * 60 * 1000); // 17 days
-  setInterval(updateTotalUsers, 3 * 24 * 60 * 60 * 1000); // 3 days
-  setInterval(updatePageViews, 7 * 24 * 60 * 60 * 1000); // 7 days
 });
+
 
 
 const fetchProfile = async () => {

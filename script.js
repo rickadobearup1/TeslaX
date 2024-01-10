@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return "";
     }
   });
-  
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   function updateNewUsers() {

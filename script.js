@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (isValidLogin) {
         // Set 'remember' cookie if 'Remember Me' is checked
         const rememberCheckbox = document.getElementById("rememberCheckbox");
-        if (rememberCheckbox && rememberCheckbox.checked) {
+        if (rememberCheckbox.checked) {
           setCookie("remember", "true", 14); // Cookie expires in 14 days
         }
 
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching data:", error);
     } finally {
       loadingSpinner.style.display = "none";
-      console.log("Spinner hidden");
+      console.log("Spinner shown");
     }
   });
 

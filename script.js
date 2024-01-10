@@ -151,7 +151,7 @@ var loginBtn = document.getElementById("loginBtn");
 
 loginBtn.addEventListener("click", async function() {
   console.log("Clicked");
-}
+})
 
 // document.addEventListener("DOMContentLoaded", function() {
 //   const loginForm = document.getElementById("loginForm");

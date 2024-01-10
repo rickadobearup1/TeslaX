@@ -521,6 +521,10 @@ img::selection {
     font-size: 0.875rem;
 }
 
+.spinner-border {
+    display: none;
+}
+
 @media (min-width:1920px) {
     #testimonials {
         margin-top: -200px;

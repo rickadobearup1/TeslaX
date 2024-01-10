@@ -129,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Clicked");
     // Show loading spinner
     loadingSpinner.style.display = "inline-block";
+    console.log("Spinner shown");
 
     // Simulate fetching data from the database (replace with your actual API call)
     try {
@@ -143,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (isValidLogin) {
         // Set 'remember' cookie if 'Remember Me' is checked
         const rememberCheckbox = document.getElementById("rememberCheckbox");
-        if (rememberCheckbox.checked) {
+        if (rememberCheckbox && rememberCheckbox.checked) {
           setCookie("remember", "true", 14); // Cookie expires in 14 days
         }
 
@@ -155,6 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching data:", error);
     } finally {
       loadingSpinner.style.display = "none";
+      console.log("Spinner hidden");
     }
   });
 

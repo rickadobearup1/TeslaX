@@ -159,6 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   loginBtn.addEventListener("click", async function() {
+    console.log({clicked});
     // Show loading spinner
     loadingSpinner.style.display = "inline-block";
 

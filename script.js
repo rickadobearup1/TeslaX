@@ -127,6 +127,14 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "dashboard.html";
     }
 
+    // Check if 'remember' cookie is present and if the session has expired
+    const rememberCookieExpired = rememberMe && checkRememberCookieExpiration();
+
+    if (rememberCookieExpired) {
+      // If 'Remember Me' has expired, clear the email from localStorage
+      localStorage.removeItem("userEmail");
+    }
+
     loginBtn.addEventListener("click", async function () {
       console.log("Clicked");
 
@@ -148,7 +156,11 @@ document.addEventListener("DOMContentLoaded", function () {
           // Set 'remember' cookie if 'Remember Me' is checked
           const rememberCheckbox = document.getElementById("rememberCheckbox");
           if (rememberCheckbox && rememberCheckbox.checked) {
+            localStorage.setItem("userEmail", email); // Store email in localStorage
             setCookie("remember", "true", 14); // Cookie expires in 14 days
+          } else {
+            // If 'Remember Me' is not checked, store email temporarily in sessionStorage
+            sessionStorage.setItem("userEmail", email);
           }
 
           window.location.href = "dashboard.html";
@@ -185,13 +197,36 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return "";
     }
+
+    // Function to check if 'remember' cookie has expired
+    function checkRememberCookieExpiration() {
+      const rememberCookie = getCookie("remember");
+      if (rememberCookie) {
+        const expirationDate = new Date(rememberCookie);
+        return expirationDate < new Date(); // Returns true if the expiration date is in the past
+      }
+      return false; // No 'remember' cookie present
+    }
   }
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener("DOMContentLoaded", async function () {
   // Check if the current page is the dashboard page
   if (window.location.pathname === "/dashboard.html") {
+    // Fetch the user's email from localStorage
+    const userEmail = localStorage.getItem("userEmail");
+
+    // Check if the user's email is present
+    if (userEmail) {
+      // Fetch user data using the email
+      const userData = await fetchUserData(userEmail);
+
+      // Update the username in the sidebar
+      updateUsername(userData.name);
+    }
+
     function updateNewUsers() {
       const newUsersElement = document.getElementById("newUsers");
       const randomValue = Math.floor(Math.random() * (40 - 4 + 1) + 4);
@@ -230,35 +265,97 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
-
-const fetchProfile = async () => {
+// Function to fetch user data using email
+async function fetchUserData(email) {
   try {
-    const response = await fetch(
-      "https://teslaxapi.onrender.com/api/profile"
-      // Replace "your-backend-url.com" with the actual URL of your backend
-    );
-
+    const response = await fetch(`https://teslaxapi.onrender.com/api/profile/${email}`);
     if (response.ok) {
-      const profileData = await response.json();
-      populateForm(profileData);
+      const userData = await response.json();
+      return userData;
     } else {
-      throw new Error("Network response was not ok");
+      throw new Error("Failed to fetch user data");
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error fetching user data:", error);
+    return null;
   }
-};
+}
 
-const populateForm = (profileData) => {
-  // Assuming that you have unique IDs for your form elements
-  document.getElementById("name").value = profileData.name;
-  document.getElementById("email").value = profileData.email;
-  document.getElementById("amount-display").textContent = profileData.amount;
-  // If you want to populate the password field, be cautious about security
-  // It's generally not recommended to pre-fill password fields for security reasons
-  // You might consider leaving the password field empty or using a placeholder
-  // document.getElementById("password").value = profileData.password;
-};
+// Function to update the username in the sidebar
+function updateUsername(username) {
+  const usernameElement = document.querySelector(".profile-usertitle-name");
+  if (usernameElement) {
+    usernameElement.textContent = username;
+  }
+}
 
-// fetchProfile();
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if the current page is the profile page
+  if (window.location.pathname === "/profile.html") {
+    // Function to fetch user data using email
+    const fetchUserData = async (email) => {
+      try {
+        const response = await fetch(`https://teslaxapi.onrender.com/api/profile/${email}`);
+        return await response.json();
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        return null;
+      }
+    };
+
+    // Function to update profile information
+    const updateProfileInfo = (userData) => {
+      if (userData) {
+        // Update name and email
+        document.getElementById("amount-name").textContent = userData.name;
+        document.getElementById("amount-email").textContent = userData.email;
+
+        // Calculate new amount based on percentage
+        const currentAmount = parseFloat(userData.amount);
+        let percentage = 0;
+
+        if (currentAmount >= 50 && currentAmount <= 200) {
+          percentage = 0.05;
+        } else if (currentAmount > 200 && currentAmount <= 700) {
+          percentage = 0.1;
+        } else if (currentAmount > 700 && currentAmount <= 5000) {
+          percentage = 0.16;
+        } else if (currentAmount > 5000 && currentAmount <= 10000) {
+          percentage = 0.25;
+        } else if (currentAmount > 10000) {
+          percentage = 0.25; // 25% for amounts above $10,000
+        }
+
+        const newAmount = currentAmount * (1 + percentage);
+
+        // Update displayed amount
+        document.getElementById("amount-display").textContent = `$${newAmount.toFixed(2)}`;
+      }
+    };
+
+    // Check if the user's email is present in localStorage
+    const userEmail = localStorage.getItem("userEmail");
+
+    // Check if the user's email is present
+    if (userEmail) {
+      // Fetch user data using the email
+      const userData = await fetchUserData(userEmail);
+
+      // Update the profile information on the page
+      updateProfileInfo(userData);
+    }
+
+    // Schedule the update to run every Friday
+    setInterval(async () => {
+      // Fetch user data using the stored email
+      const userData = await fetchUserData(userEmail);
+
+      // Update the profile information on the page
+      updateProfileInfo(userData);
+    }, 7 * 24 * 60 * 60 * 1000); // 7 days
+  }
+});
+

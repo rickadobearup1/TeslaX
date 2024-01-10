@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (isValidLogin) {
         // Set 'remember' cookie if 'Remember Me' is checked
         const rememberCheckbox = document.getElementById("rememberCheckbox");
-        if (rememberCheckbox.checked) {
+        if (rememberCheckbox && rememberCheckbox.checked) {
           setCookie("remember", "true", 14); // Cookie expires in 14 days
         }
 

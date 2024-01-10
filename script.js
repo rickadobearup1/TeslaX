@@ -158,60 +158,66 @@ document.addEventListener("DOMContentLoaded", function() {
     window.location.href = "dashboard.html";
   }
 
-  loginBtn.addEventListener("click", async function() {
-    console.log({clicked});
-    // Show loading spinner
-    loadingSpinner.style.display = "inline-block";
-
-    // Simulate fetching data from the database (replace with your actual API call)
-    try {
-      const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-      const data = await response.json();
-
-      // Simulate checking login credentials
-      const email = loginForm.email.value;
-      const password = loginForm.password.value;
-      const isValidLogin = data.some(user => user.email === email && user.password === password);
-
-      if (isValidLogin) {
-        // Set 'remember' cookie if 'Remember Me' is checked
-        const rememberCheckbox = document.getElementById("rememberCheckbox");
-        if (rememberCheckbox.checked) {
-          setCookie("remember", "true", 14); // Cookie expires in 14 days
+  document.addEventListener("DOMContentLoaded", function () {
+    var loginBtn = document.getElementById("loginBtn");
+    var loginForm = document.getElementById("loginForm");
+    var loadingSpinner = document.getElementById("loadingSpinner");
+  
+    loginBtn.addEventListener("click", async function() {
+      console.log("Clicked");
+      // Show loading spinner
+      loadingSpinner.style.display = "inline-block";
+  
+      // Simulate fetching data from the database (replace with your actual API call)
+      try {
+        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+        const data = await response.json();
+  
+        // Simulate checking login credentials
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
+        const isValidLogin = data.some(user => user.email === email && user.password === password);
+  
+        if (isValidLogin) {
+          // Set 'remember' cookie if 'Remember Me' is checked
+          const rememberCheckbox = document.getElementById("rememberCheckbox");
+          if (rememberCheckbox.checked) {
+            setCookie("remember", "true", 14); // Cookie expires in 14 days
+          }
+  
+          window.location.href = "dashboard.html";
+        } else {
+          alert("Invalid login credentials");
         }
-
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Invalid login credentials");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        loadingSpinner.style.display = "none";
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      loadingSpinner.style.display = "none";
+    });
+  
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+  
+    // Function to get the value of a cookie
+    function getCookie(name) {
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookies = decodedCookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1);
+        }
+      }
+      return "";
     }
   });
-
-  // Function to set a cookie
-  function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  }
-
-  // Function to get the value of a cookie
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(name + "=")) {
-        return cookie.substring(name.length + 1);
-      }
-    }
-    return "";
-  }
-});
+  
 
 document.addEventListener("DOMContentLoaded", function () {
   function updateNewUsers() {

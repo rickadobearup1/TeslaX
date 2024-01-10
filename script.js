@@ -147,6 +147,8 @@ document.getElementById("profileForm").addEventListener("submit", function (even
   saveProfile(); // Call your custom function to handle the submission
 });
 
+var loginBtn = document.getElementById("loginBtn");
+
 loginBtn.addEventListener("click", async function() {
   console.log("Clicked");
 }

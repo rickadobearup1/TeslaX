@@ -262,6 +262,23 @@ document.addEventListener("DOMContentLoaded", async function () {
     setInterval(updateReviews, 17 * 24 * 60 * 60 * 1000); // 17 days
     setInterval(updateTotalUsers, 3 * 24 * 60 * 60 * 1000); // 3 days
     setInterval(updatePageViews, 7 * 24 * 60 * 60 * 1000); // 7 days
+
+    const logoutButtons = document.querySelectorAll(".logout-btn");
+
+    if (logoutButtons.length > 0) {
+      logoutButtons.forEach(function (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+          // Clear cookies
+          document.cookie = "remember=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+          // Clear localStorage
+          localStorage.removeItem("userEmail");
+
+          // Redirect to login page
+          window.location.href = "login.html";
+        });
+      });
+    }
   }
 });
 
@@ -333,6 +350,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Update displayed amount
         document.getElementById("amount-display").textContent = `$${newAmount.toFixed(2)}`;
+
+        updateUsername(userData.name);
       }
     };
 
@@ -356,6 +375,23 @@ document.addEventListener("DOMContentLoaded", function () {
       // Update the profile information on the page
       updateProfileInfo(userData);
     }, 7 * 24 * 60 * 60 * 1000); // 7 days
+
+    const logoutButtons = document.querySelectorAll(".logout-btn");
+
+    if (logoutButtons.length > 0) {
+      logoutButtons.forEach(function (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+          // Clear cookies
+          document.cookie = "remember=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+          // Clear localStorage
+          localStorage.removeItem("userEmail");
+
+          // Redirect to login page
+          window.location.href = "login.html";
+        });
+      });
+    }
   }
 });
 

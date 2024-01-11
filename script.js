@@ -137,44 +137,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loginBtn.addEventListener("click", async function () {
       console.log("Clicked");
-
+    
       // Show loading text and hide login button
       loadingText.style.display = "inline-block";
       loginBtn.style.display = "none";
-
-      // Simulate fetching data from the database (replace with your actual API call)
-      try {
-        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-        const data = await response.json();
-
-        // Simulate checking login credentials
-        const email = loginForm.email.value;
-        const password = loginForm.password.value;
-        const isValidLogin = data.some(user => user.email === email && user.password === password);
-
-        if (isValidLogin) {
-          // Set 'remember' cookie if 'Remember Me' is checked
-          const rememberCheckbox = document.getElementById("rememberCheckbox");
-          if (rememberCheckbox && rememberCheckbox.checked) {
-            localStorage.setItem("userEmail", email); // Store email in localStorage
-            setCookie("remember", "true", 14); // Cookie expires in 14 days
+    
+      // Define an async function for the try-catch block
+      async function fetchData() {
+        try {
+          const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+          const data = await response.json();
+    
+          // Simulate checking login credentials
+          const email = loginForm.email.value;
+          const password = loginForm.password.value;
+          const isValidLogin = data.some(user => user.email === email && user.password === password);
+    
+          if (isValidLogin) {
+            // Set 'remember' cookie if 'Remember Me' is checked
+            const rememberCheckbox = document.getElementById("rememberCheckbox");
+            if (rememberCheckbox && rememberCheckbox.checked) {
+              localStorage.setItem("userEmail", email); // Store email in localStorage
+              setCookie("remember", "true", 14); // Cookie expires in 14 days
+            } else {
+              // If 'Remember Me' is not checked, store email temporarily in sessionStorage
+              sessionStorage.setItem("userEmail", email);
+            }
+    
+            window.location.href = "dashboard.html";
           } else {
-            // If 'Remember Me' is not checked, store email temporarily in sessionStorage
-            sessionStorage.setItem("userEmail", email);
+            alert("Invalid login credentials");
           }
-
-          window.location.href = "dashboard.html";
-        } else {
-          alert("Invalid login credentials");
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          // Hide loading text and show login button
+          loadingText.style.display = "none";
+          loginBtn.style.display = "inline-block";
+          console.log("Login button and loading text restored");
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        // Hide loading text and show login button
-        loadingText.style.display = "none";
-        loginBtn.style.display = "inline-block";
-        console.log("Login button and loading text restored");
       }
+    
+      // Call the async function
+      await fetchData();
     });
 
     // Function to set a cookie

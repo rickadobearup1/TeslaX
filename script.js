@@ -448,6 +448,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if the current page is the createprofile page
+  const isCreateProfilePage = window.location.pathname === "/createprofile.html";
+
+  if (isCreateProfilePage) {
+    // Attach the event listener only if it's the createprofile page
+    document.getElementById("profileForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default form submission
+      saveProfile(); // Call your custom function to handle the submission
+    });
+  }
+});
+
 const saveProfile = async () => {
   const profile = {
     name: document.getElementById("name").value,
@@ -455,11 +468,14 @@ const saveProfile = async () => {
     amount: document.getElementById("amount").value,
     password: document.getElementById("password").value,
   };
-  
+
+  const loadingTextp = document.getElementById("loadingTextp");
+  const saveProfileButton = document.getElementById("saveProfile");
+
   loadingTextp.style.display = "inline-block";
-  saveProfile.style.display = "none";
+  saveProfileButton.style.display = "none";
+
   try {
-   
     const response = await fetch(
       "https://teslaxapi.onrender.com/api/profile", // Replace with your actual backend URL
       {
@@ -481,17 +497,17 @@ const saveProfile = async () => {
       console.error("Error saving profile:", json);
       // Handle setting errors or empty fields in your frontend state as needed
     }
-
-    
+    else {
+      // Clear input fields on successful profile creation
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("amount").value = "";
+      document.getElementById("password").value = "";
+    }
   } catch (error) {
     console.error("Error fetching:", error);
   }
-  
-  loadingTextp.style.display = "none";
-  saveProfile.style.display = "inline-block";
-};
 
-document.getElementById("profileForm").addEventListener("submit", function (event) {
-  event.preventDefault(); // Prevent default form submission
-  saveProfile(); // Call your custom function to handle the submission
-});
+  loadingTextp.style.display = "none";
+  saveProfileButton.style.display = "inline-block";
+};

@@ -155,7 +155,7 @@ $(document).ready(function () {
 //     }
 // }, 1000);
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   // Check if the current page is the login page
   if (window.location.pathname === "/login.html") {
     const loginForm = document.getElementById("loginForm");

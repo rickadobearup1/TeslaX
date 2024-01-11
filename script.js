@@ -178,22 +178,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loginBtn.addEventListener("click", async function () {
       console.log("Clicked");
-    
+
       // Show loading text and hide login button
       loadingText.style.display = "inline-block";
       loginBtn.style.display = "none";
-    
+
       // Define an async function for the try-catch block
       async function fetchData() {
         try {
           const response = await fetch("https://teslaxapi.onrender.com/api/profile");
           const data = await response.json();
-    
+
           // Simulate checking login credentials
           const email = loginForm.email.value;
           const password = loginForm.password.value;
           const isValidLogin = data.some(user => user.email === email && user.password === password);
-    
+
           if (isValidLogin) {
             // Set 'remember' cookie if 'Remember Me' is checked
             const rememberCheckbox = document.getElementById("rememberCheckbox");
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
               // If 'Remember Me' is not checked, store email temporarily in sessionStorage
               sessionStorage.setItem("userEmail", email);
             }
-    
+
             window.location.href = "dashboard.html";
           } else {
             alert("Invalid login credentials");
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("Login button and loading text restored");
         }
       }
-    
+
       // Call the async function
       await fetchData();
     });
@@ -255,6 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
 
 
 

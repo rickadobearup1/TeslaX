@@ -423,7 +423,9 @@ document.addEventListener("DOMContentLoaded", function () {
       updateProfileInfo(userData);
     };
 
-    setInterval(updateProfileData, 7 * 24 * 60 * 60 * 1000); // 7 days
+    setInterval(async () => {
+      await updateProfileData();
+    }, 7 * 24 * 60 * 60 * 1000); // 7 days
 
     const logoutButtons = document.querySelectorAll(".logout-btn");
 

@@ -83,6 +83,47 @@ $(document).ready(function () {
     );
   });
 });
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   // Handle initial page load
+//   handleRoute();
+
+//   // Handle navigation events
+//   window.addEventListener("hashchange", handleRoute);
+
+//   function handleRoute() {
+//       const hash = window.location.hash.substr(1);
+
+//       // Define your routes
+//       const routes = {
+//           "": "index",        // Default route
+//           "login": "login",  // Maps #login to the login route
+//           "profile": "profile",
+//           "dashboard": "dashboard"
+//           // Add more routes as needed
+//       };
+
+//       // Check if the hash corresponds to a route
+//       if (hash in routes) {
+//           // Load the content for the route
+//           loadContent(routes[hash]);
+//       } else {
+//           // Handle unknown routes (e.g., display a 404 page)
+//           loadContent("404");
+//       }
+//   }
+
+//   function loadContent(route) {
+//       // Use fetch or any other method to load the content for the given route
+//       fetch(`/views/${route}.html`)  // Update the path based on your file structure
+//           .then(response => response.text())
+//           .then(html => {
+//               // Update the content of your main container
+//               document.getElementById("main-container").innerHTML = html;
+//           })
+//           .catch(error => console.error("Error loading content:", error));
+//   }
+// });
 // Set the date we're counting down to
 // var countDownDate = new Date();
 // countDownDate.setDate(countDownDate.getDate() + 10);

@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     function updatePageViews() {
       const pageViewsElement = document.getElementById("pageViews");
       const currentPageViews = parseFloat(pageViewsElement.textContent.replace(/,/g, ''));
-      pageViewsElement.textContent = (currentPageViews + 15200).toLocaleString();
+      pageViewsElement.textContent = `$${(currentPageViews + 15200).toLocaleString()}`;
     }
 
     updateNewUsers();
@@ -356,95 +356,95 @@ function updateUsername(username) {
 
 
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Check if the current page is the profile page
-//   if (window.location.pathname === "/profile.html") {
-//     // Function to fetch user data using email
-//     const fetchUserData = async (email) => {
-//       try {
-//         const response = await fetch(`https://teslaxapi.onrender.com/api/profile/${email}`);
-//         return await response.json();
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//         return null;
-//       }
-//     };
+document.addEventListener("DOMContentLoaded", async function () {
+  // Check if the current page is the profile page
+  if (window.location.pathname === "/profile.html") {
+    // Function to fetch user data using email
+    const fetchUserData = async (email) => {
+      try {
+        const response = await fetch(`https://teslaxapi.onrender.com/api/profile/${email}`);
+        return await response.json();
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        return null;
+      }
+    };
 
-//     // Function to update profile information
-//     const updateProfileInfo = (userData) => {
-//       if (userData) {
-//         // Update name and email
-//         document.getElementById("amount-name").textContent = userData.name;
-//         document.getElementById("amount-email").textContent = userData.email;
+    // Function to update profile information
+    const updateProfileInfo = (userData) => {
+      if (userData) {
+        // Update name and email
+        document.getElementById("amount-name").textContent = userData.name;
+        document.getElementById("amount-email").textContent = userData.email;
 
-//         // Calculate new amount based on percentage
-//         const currentAmount = parseFloat(userData.amount);
-//         let percentage = 0;
+        // Calculate new amount based on percentage
+        const currentAmount = parseFloat(userData.amount);
+        let percentage = 0;
 
-//         if (currentAmount >= 50 && currentAmount <= 200) {
-//           percentage = 0.05;
-//         } else if (currentAmount > 200 && currentAmount <= 700) {
-//           percentage = 0.1;
-//         } else if (currentAmount > 700 && currentAmount <= 5000) {
-//           percentage = 0.16;
-//         } else if (currentAmount > 5000 && currentAmount <= 10000) {
-//           percentage = 0.25;
-//         } else if (currentAmount > 10000) {
-//           percentage = 0.25; // 25% for amounts above $10,000
-//         }
+        if (currentAmount >= 50 && currentAmount <= 200) {
+          percentage = 0.05;
+        } else if (currentAmount > 200 && currentAmount <= 700) {
+          percentage = 0.1;
+        } else if (currentAmount > 700 && currentAmount <= 5000) {
+          percentage = 0.16;
+        } else if (currentAmount > 5000 && currentAmount <= 10000) {
+          percentage = 0.25;
+        } else if (currentAmount > 10000) {
+          percentage = 0.25; // 25% for amounts above $10,000
+        }
 
-//         const newAmount = currentAmount * (1 + percentage);
+        const newAmount = currentAmount * (1 + percentage);
 
-//         // Update displayed amount
-//         document.getElementById("amount-display").textContent = `$${newAmount.toFixed(2)}`;
+        // Update displayed amount
+        document.getElementById("amount-display").textContent = `$${newAmount.toFixed(2)}`;
 
-//         updateUsername(userData.name);
-//       }
-//     };
+        updateUsername(userData.name);
+      }
+    };
 
-//     // Check if the user's email is present in localStorage
-//     const userEmail = localStorage.getItem("userEmail");
+    // Check if the user's email is present in localStorage
+    const userEmail = localStorage.getItem("userEmail");
 
-//     // Check if the user's email is present
-//     if (userEmail) {
-//       // Fetch user data using the email
-//       const userData = await fetchUserData(userEmail);
+    // Check if the user's email is present
+    if (userEmail) {
+      // Fetch user data using the email
+      const userData = await fetchUserData(userEmail);
 
-//       // Update the profile information on the page
-//       updateProfileInfo(userData);
-//     }
+      // Update the profile information on the page
+      updateProfileInfo(userData);
+    }
 
-//     // const intervalCallback = async () => {
-//     //   // Fetch user data using the stored email
-//     //   const userData = await fetchUserData(userEmail);
+    const intervalCallback = async () => {
+      // Fetch user data using the stored email
+      const userData = await fetchUserData(userEmail);
     
-//     //   // Update the profile information on the page
-//     //   updateProfileInfo(userData);
-//     // };
+      // Update the profile information on the page
+      updateProfileInfo(userData);
+    };
     
-//     // // Call the async function once immediately (before the interval starts)
-//     // intervalCallback();
+    // Call the async function once immediately (before the interval starts)
+    intervalCallback();
     
-//     // // Set up the setInterval to call the async function
-//     // setInterval(intervalCallback, 7 * 24 * 60 * 60 * 1000); // 7 days
+    // Set up the setInterval to call the async function
+    setInterval(intervalCallback, 7 * 24 * 60 * 60 * 1000); // 7 days
 
-//     const logoutButtons = document.querySelectorAll(".logout-btn");
+    const logoutButtons = document.querySelectorAll(".logout-btn");
 
-//     if (logoutButtons.length > 0) {
-//       logoutButtons.forEach(function (logoutBtn) {
-//         logoutBtn.addEventListener("click", function () {
-//           // Clear cookies
-//           document.cookie = "remember=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    if (logoutButtons.length > 0) {
+      logoutButtons.forEach(function (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+          // Clear cookies
+          document.cookie = "remember=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-//           // Clear localStorage
-//           localStorage.removeItem("userEmail");
+          // Clear localStorage
+          localStorage.removeItem("userEmail");
 
-//           // Redirect to login page
-//           window.location.href = "login.html";
-//         });
-//       });
-//     }
-//   }
-// });
+          // Redirect to login page
+          window.location.href = "login.html";
+        });
+      });
+    }
+  }
+});
 
 

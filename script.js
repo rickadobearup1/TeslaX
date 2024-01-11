@@ -414,18 +414,19 @@ document.addEventListener("DOMContentLoaded", function () {
       updateProfileInfo(userData);
     }
 
-    // Schedule the update to run every Friday
-    const updateProfileData = async () => {
+    const intervalCallback = async () => {
       // Fetch user data using the stored email
       const userData = await fetchUserData(userEmail);
-
+    
       // Update the profile information on the page
       updateProfileInfo(userData);
     };
-
-    setInterval(async () => {
-      await updateProfileData();
-    }, 7 * 24 * 60 * 60 * 1000); // 7 days
+    
+    // Call the async function once immediately (before the interval starts)
+    intervalCallback();
+    
+    // Set up the setInterval to call the async function
+    setInterval(intervalCallback, 7 * 24 * 60 * 60 * 1000); // 7 days
 
     const logoutButtons = document.querySelectorAll(".logout-btn");
 

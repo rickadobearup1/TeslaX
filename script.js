@@ -415,13 +415,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Schedule the update to run every Friday
-    setInterval(async () => {
+    const updateProfileData = async () => {
       // Fetch user data using the stored email
       const userData = await fetchUserData(userEmail);
 
       // Update the profile information on the page
       updateProfileInfo(userData);
-    }, 7 * 24 * 60 * 60 * 1000); // 7 days
+    };
+
+    setInterval(updateProfileData, 7 * 24 * 60 * 60 * 1000); // 7 days
 
     const logoutButtons = document.querySelectorAll(".logout-btn");
 
@@ -441,4 +443,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
 

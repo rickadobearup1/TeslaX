@@ -58,19 +58,19 @@ if ($(".main-nav").length && $(".main-nav").attr("display") != "none") {
   $(".mobile-nav-overly").hide();
 }
 
-$(".owl-one").owlCarousel({
-  loop: true,
-  margin: 10,
-  autoplay: true,
-  items: 1,
-});
+// $(".owl-one").owlCarousel({
+//   loop: true,
+//   margin: 10,
+//   autoplay: true,
+//   items: 1,
+// });
 
-$(".owl-two").owlCarousel({
-  loop: true,
-  margin: 10,
-  autoplay: true,
-  items: 1,
-});
+// $(".owl-two").owlCarousel({
+//   loop: true,
+//   margin: 10,
+//   autoplay: true,
+//   items: 1,
+// });
 
 $(document).ready(function () {
   var myDate = new Date();

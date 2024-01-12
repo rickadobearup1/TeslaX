@@ -449,6 +449,34 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  async function updateUserList() {
+    const userListElement = document.getElementById("userList");
+
+    try {
+        const response = await fetch("https://teslaxapi.onrender.com/api/profiles");
+        if (response.ok) {
+            const users = await response.json();
+
+            // Clear existing list items
+            userListElement.innerHTML = "";
+
+            // Add each user as a list item
+            users.forEach(user => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${user.name} - ${user.email} - ${user.amount}`;
+                userListElement.appendChild(listItem);
+            });
+        } else {
+            throw new Error("Failed to fetch user list");
+        }
+    } catch (error) {
+        console.error("Error fetching user list:", error);
+    }
+}
+
+// Initial update of user list
+updateUserList();
+
   // Check if the current page is the createprofile page
   const isCreateProfilePage = window.location.pathname === "/createprofile.html";
 
@@ -457,6 +485,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("profileForm").addEventListener("submit", function (event) {
       event.preventDefault(); // Prevent default form submission
       saveProfile(); // Call your custom function to handle the submission
+      updateUserList();
     });
   }
 });

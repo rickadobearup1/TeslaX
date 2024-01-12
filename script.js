@@ -266,14 +266,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userEmail = localStorage.getItem("userEmail");
 
     // Check if the user's email is present
-    if (userEmail) {
-      // Fetch user data using the email
+    if (!userEmail) {
+      alert("You are not Logged In. Click OK to login .", function() {
+        window.location.href = "login.html";
+    }); 
+    } else {
       const userData = await fetchUserData(userEmail);
 
-      // Update the username in the sidebar
       updateUsername(userData.name);
-    } else {
-      alert("You are not Logged In")
     }
 
     function updateNewUsers() {
@@ -451,6 +451,57 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  const saveProfile = async () => {
+    const profile = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      amount: document.getElementById("amount").value,
+      password: document.getElementById("password").value,
+    };
+  
+    const loadingTextp = document.getElementById("loadingTextp");
+    const saveProfileButton = document.getElementById("saveProfile");
+  
+    loadingTextp.style.display = "inline-block";
+    saveProfileButton.style.display = "none";
+  
+    try {
+      const response = await fetch(
+        "https://teslaxapi.onrender.com/api/profile", // Replace with your actual backend URL
+        {
+          method: "POST",
+          body: JSON.stringify(profile),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      const json = await response.json();
+  
+      console.log("Response:", response);
+      console.log("JSON:", json);
+  
+      if (!response.ok) {
+        // Handle errors
+        console.error("Error saving profile:", json);
+        // Handle setting errors or empty fields in your frontend state as needed
+      }
+      else {
+        // Clear input fields on successful profile creation
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("amount").value = "";
+        document.getElementById("password").value = "";
+      }
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  
+    loadingTextp.style.display = "none";
+    saveProfileButton.style.display = "inline-block";
+  };
+
   async function updateUserList() {
     const userListElement = document.getElementById("userList");
 
@@ -493,53 +544,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-const saveProfile = async () => {
-  const profile = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    amount: document.getElementById("amount").value,
-    password: document.getElementById("password").value,
-  };
 
-  const loadingTextp = document.getElementById("loadingTextp");
-  const saveProfileButton = document.getElementById("saveProfile");
-
-  loadingTextp.style.display = "inline-block";
-  saveProfileButton.style.display = "none";
-
-  try {
-    const response = await fetch(
-      "https://teslaxapi.onrender.com/api/profile", // Replace with your actual backend URL
-      {
-        method: "POST",
-        body: JSON.stringify(profile),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const json = await response.json();
-
-    console.log("Response:", response);
-    console.log("JSON:", json);
-
-    if (!response.ok) {
-      // Handle errors
-      console.error("Error saving profile:", json);
-      // Handle setting errors or empty fields in your frontend state as needed
-    }
-    else {
-      // Clear input fields on successful profile creation
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("amount").value = "";
-      document.getElementById("password").value = "";
-    }
-  } catch (error) {
-    console.error("Error fetching:", error);
-  }
-
-  loadingTextp.style.display = "none";
-  saveProfileButton.style.display = "inline-block";
-};

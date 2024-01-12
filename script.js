@@ -272,6 +272,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Update the username in the sidebar
       updateUsername(userData.name);
+    } else {
+      alert("You are not Logged In")
     }
 
     function updateNewUsers() {
@@ -453,7 +455,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const userListElement = document.getElementById("userList");
 
     try {
-        const response = await fetch("https://teslaxapi.onrender.com/api/profiles");
+        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
         if (response.ok) {
             const users = await response.json();
 
@@ -475,12 +477,13 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 // Initial update of user list
-updateUserList();
+
 
   // Check if the current page is the createprofile page
   const isCreateProfilePage = window.location.pathname === "/createprofile.html";
 
   if (isCreateProfilePage) {
+    updateUserList();
     // Attach the event listener only if it's the createprofile page
     document.getElementById("profileForm").addEventListener("submit", function (event) {
       event.preventDefault(); // Prevent default form submission

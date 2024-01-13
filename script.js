@@ -461,8 +461,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
             const users = await response.json();
 
-            // Clear existing content
-            userListElement.innerHTML = "";
+        users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Clear existing content
+        userListElement.innerHTML = "";
 
             // Add each user as a list item with edit and delete buttons
             users.forEach((user) => {

@@ -513,6 +513,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Initial update of user list
+    updateUserList();
 
     // Check if the current page is the createprofile page
     const isCreateProfilePage = window.location.pathname === "/createprofile.html";
@@ -527,8 +528,8 @@ document.addEventListener("DOMContentLoaded", function () {
         updateUserList();
       });
     }
-  }
-  });
+  };
+});
 
   // Example edit and delete handlers
   function handleEdit(userId) {

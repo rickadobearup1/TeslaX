@@ -567,8 +567,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function handleDelete(userId) {
-    const response = await fetch("https://teslaxapi.onrender.com/api/profile/userId");
-    console.log("User deleted");
-    alert("User deleted")
-    // Implement your delete logic here
-  }
+    const response = await fetch(`https://teslaxapi.onrender.com/api/profile/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (response.ok) {
+        console.log("User deleted");
+        alert("User deleted");
+        // Implement any additional logic after successful deletion
+    } else {
+        console.error("Failed to delete user");
+        alert("Failed to delete user");
+        // Implement error handling logic
+    }
+}
+

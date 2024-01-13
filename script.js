@@ -456,6 +456,10 @@ document.addEventListener("DOMContentLoaded", function () {
   async function updateUserList() {
     const userListElement = document.getElementById("userList");
 
+    const loadingUser = document.getElementById("loadingUser");
+  
+    loadingUser.style.display = "inline-block";
+
     try {
         const response = await fetch("https://teslaxapi.onrender.com/api/profile");
         if (response.ok) {
@@ -501,6 +505,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
         console.error("Error fetching user list:", error);
     }
+
+    loadingUser.style.display = "none";
 }
 
   const saveProfile = async () => {
@@ -546,7 +552,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingTextp.style.display = "none";
     saveProfileButton.style.display = "inline-block";
   };
-  const isCreateProfilePage = window.location.pathname === "/createprofile.html";
+  const isCreateProfilePage = window.location.pathname === "/createprofile.html" || window.location.pathname === "/createprofile.html;
 
     if (isCreateProfilePage) {
       console.log("Create Profile");
@@ -576,6 +582,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (response.ok) {
         console.log("User deleted");
+        updateUserList()
         alert("User deleted");
         // Implement any additional logic after successful deletion
     } else {

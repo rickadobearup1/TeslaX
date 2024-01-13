@@ -543,7 +543,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!response.ok) {
         // Handle errors
         console.error("Error saving profile:", json);
+        
         // Handle setting errors or empty fields in your frontend state as needed
+      } else {
+        updateUserList();
       }
     } catch (error) {
       console.error("Error fetching:", error);
@@ -552,25 +555,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingTextp.style.display = "none";
     saveProfileButton.style.display = "inline-block";
   };
-  const isCreateProfilePage = window.location.pathname === "/createprofile.html" || window.location.pathname === "/createprofile.html";
-
-    if (isCreateProfilePage) {
-      console.log("Create Profile");
-      updateUserList();
-      // Attach the event listener only if it's the createprofile page
-      document.getElementById("profileForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent default form submission
-        saveProfile(); // Call your custom function to handle the submission
-        updateUserList();
-      });
-    }
-});
-
-  // Example edit and delete handlers
-  function handleEdit(userId) {
-    console.log(`Edit user with ID: ${userId}`);
-    // Implement your edit logic here
-  }
 
   async function handleDelete(userId) {
     const response = await fetch(`https://teslaxapi.onrender.com/api/profile/${userId}`, {
@@ -591,4 +575,26 @@ document.addEventListener("DOMContentLoaded", function () {
         // Implement error handling logic
     }
 }
+
+  const isCreateProfilePage = window.location.pathname === "/createprofile.html" || window.location.pathname === "/createprofile";
+
+    if (isCreateProfilePage) {
+      console.log("Create Profile");
+      updateUserList();
+      // Attach the event listener only if it's the createprofile page
+      document.getElementById("profileForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default form submission
+        saveProfile(); // Call your custom function to handle the submission
+        
+      });
+    }
+});
+
+  // Example edit and delete handlers
+  function handleEdit(userId) {
+    console.log(`Edit user with ID: ${userId}`);
+    // Implement your edit logic here
+  }
+
+  
 

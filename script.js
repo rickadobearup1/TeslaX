@@ -515,7 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial update of user list
 
     // Check if the current page is the createprofile page
-    const isCreateProfilePage = window.location.pathname.endsWith("/createprofile.html");
+    const isCreateProfilePage = window.location.pathname === "/createprofile.html";
 
     if (isCreateProfilePage) {
       updateUserList();

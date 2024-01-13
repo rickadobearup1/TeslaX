@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 document.addEventListener("DOMContentLoaded", async function () {
   // Check if the current page is the dashboard page
-  if (window.location.pathname === "/dashboard.html") {
+  if (window.location.pathname === "/dashboard.html" || window.location.pathname === "/dashboard") {
     // Fetch the user's email from localStorage
     const userEmail = localStorage.getItem("userEmail");
 
@@ -362,7 +362,7 @@ function updateUsername(username) {
 
 document.addEventListener("DOMContentLoaded", async function () {
   // Check if the current page is the profile page
-  if (window.location.pathname === "/profile.html") {
+  if (window.location.pathname === "/profile.html" || window.location.pathname === "/profile") {
     // Function to fetch user data using email
     const fetchUserData = async (email) => {
       try {
@@ -546,6 +546,10 @@ document.addEventListener("DOMContentLoaded", function () {
         
         // Handle setting errors or empty fields in your frontend state as needed
       } else {
+        document.getElementById("name").value = ""
+        document.getElementById("email").value = ""
+        document.getElementById("amount").value = ""
+        document.getElementById("password").value = ""
         updateUserList();
       }
     } catch (error) {

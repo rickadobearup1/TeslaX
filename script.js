@@ -453,6 +453,94 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  async function updateUserList() {
+    const userListElement = document.getElementById("userList");
+
+    try {
+      const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+      if (response.ok) {
+        const users = await response.json();
+
+        // Clear existing content
+        userListElement.innerHTML = "";
+
+        // Add each user as a list item with edit and delete buttons
+        users.forEach((user) => {
+          const userDiv = document.createElement("div");
+          userDiv.classList.add("user-item");
+
+          // User data
+          const userData = document.createElement("p");
+          userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
+          userDiv.appendChild(userData);
+
+          // Edit button
+          const editButton = document.createElement("button");
+          editButton.textContent = "Edit";
+          editButton.classList.add("btn", "btn-primary", "btn-sm");
+          editButton.addEventListener("click", () => handleEdit(user.id)); // Replace handleEdit with your edit logic
+          userDiv.appendChild(editButton);
+
+          // Delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "Delete";
+          deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+          deleteButton.addEventListener("click", () => handleDelete(user.id)); // Replace handleDelete with your delete logic
+          userDiv.appendChild(deleteButton);
+
+          userListElement.appendChild(userDiv);
+        });
+      } else {
+        throw new Error("Failed to fetch user list");
+      }
+    } catch (error) {
+      console.error("Error fetching user list:", error);
+    }
+  }
+
+  const saveProfile = async () => {
+    const profile = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      amount: document.getElementById("amount").value,
+      password: document.getElementById("password").value,
+    };
+  
+    const loadingTextp = document.getElementById("loadingTextp");
+    const saveProfileButton = document.getElementById("saveProfile");
+  
+    loadingTextp.style.display = "inline-block";
+    saveProfileButton.style.display = "none";
+  
+    try {
+      const response = await fetch(
+        "https://teslaxapi.onrender.com/api/profile", // Replace with your actual backend URL
+        {
+          method: "POST",
+          body: JSON.stringify(profile),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      const json = await response.json();
+  
+      console.log("Response:", response);
+      console.log("JSON:", json);
+  
+      if (!response.ok) {
+        // Handle errors
+        console.error("Error saving profile:", json);
+        // Handle setting errors or empty fields in your frontend state as needed
+      }
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  
+    loadingTextp.style.display = "none";
+    saveProfileButton.style.display = "inline-block";
+  };
   const isCreateProfilePage = window.location.pathname === "/createprofile.html";
 
     if (isCreateProfilePage) {
@@ -465,70 +553,6 @@ document.addEventListener("DOMContentLoaded", function () {
         updateUserList();
       });
     }
-    
-  const saveProfile = async () => {
-    const profile = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      amount: document.getElementById("amount").value,
-      password: document.getElementById("password").value,
-    };
-
-    const loadingTextp = document.getElementById("loadingTextp");
-    const saveProfileButton = document.getElementById("saveProfile");
-
-    loadingTextp.style.display = "inline-block";
-    saveProfileButton.style.display = "none";
-
-    async function updateUserList() {
-      const userListElement = document.getElementById("userList");
-
-      try {
-        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-        if (response.ok) {
-          const users = await response.json();
-
-          // Clear existing content
-          userListElement.innerHTML = "";
-
-          // Add each user as a list item with edit and delete buttons
-          users.forEach((user) => {
-            const userDiv = document.createElement("div");
-            userDiv.classList.add("user-item");
-
-            // User data
-            const userData = document.createElement("p");
-            userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
-            userDiv.appendChild(userData);
-
-            // Edit button
-            const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
-            editButton.classList.add("btn", "btn-primary", "btn-sm");
-            editButton.addEventListener("click", () => handleEdit(user.id)); // Replace handleEdit with your edit logic
-            userDiv.appendChild(editButton);
-
-            // Delete button
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-            deleteButton.addEventListener("click", () => handleDelete(user.id)); // Replace handleDelete with your delete logic
-            userDiv.appendChild(deleteButton);
-
-            userListElement.appendChild(userDiv);
-          });
-        } else {
-          throw new Error("Failed to fetch user list");
-        }
-      } catch (error) {
-        console.error("Error fetching user list:", error);
-      }
-    }
-
-
-    // Check if the current page is the createprofile page
-    
-  };
 });
 
   // Example edit and delete handlers

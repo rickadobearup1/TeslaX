@@ -552,7 +552,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingTextp.style.display = "none";
     saveProfileButton.style.display = "inline-block";
   };
-  const isCreateProfilePage = window.location.pathname === "/createprofile.html" || window.location.pathname === "/createprofile.html;
+  const isCreateProfilePage = window.location.pathname === "/createprofile.html" || window.location.pathname === "/createprofile.html";
 
     if (isCreateProfilePage) {
       console.log("Create Profile");

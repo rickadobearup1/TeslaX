@@ -266,15 +266,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     const userEmail = localStorage.getItem("userEmail");
 
     // Check if the user's email is present
-    if (!userEmail) {
-      alert("You are not Logged In. Click OK to login .", function() {
-        window.location.href = "login.html";
-    }); 
-    } else {
-      const userData = await fetchUserData(userEmail);
+if (!userEmail) {
+  const confirmation = window.confirm("You are not Logged In. Click OK to login.");
 
-      updateUsername(userData.name);
-    }
+  if (confirmation) {
+      window.location.href = "login.html";
+  }
+} else {
+  const userData = await fetchUserData(userEmail);
+  updateUsername(userData.name);
+}
+
 
     function updateNewUsers() {
       const newUsersElement = document.getElementById("newUsers");
@@ -465,73 +467,56 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingTextp.style.display = "inline-block";
     saveProfileButton.style.display = "none";
   
-    try {
-      const response = await fetch(
-        "https://teslaxapi.onrender.com/api/profile", // Replace with your actual backend URL
-        {
-          method: "POST",
-          body: JSON.stringify(profile),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    async function updateUserList() {
+      const userListElement = document.getElementById("userList");
   
-      const json = await response.json();
+      try {
+          const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+          if (response.ok) {
+              const users = await response.json();
   
-      console.log("Response:", response);
-      console.log("JSON:", json);
+              // Clear existing content
+              userListElement.innerHTML = "";
   
-      if (!response.ok) {
-        // Handle errors
-        console.error("Error saving profile:", json);
-        // Handle setting errors or empty fields in your frontend state as needed
+              // Add each user as a list item with edit and delete buttons
+              users.forEach(user => {
+                  const userDiv = document.createElement("div");
+                  userDiv.classList.add("user-item");
+  
+                  // User data
+                  const userData = document.createElement("p");
+                  userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
+                  userDiv.appendChild(userData);
+  
+                  // Edit button
+                  const editButton = document.createElement("button");
+                  editButton.textContent = "Edit";
+                  editButton.classList.add("btn", "btn-primary", "btn-sm");
+                  editButton.addEventListener("click", () => handleEdit(user.id)); // Replace handleEdit with your edit logic
+                  userDiv.appendChild(editButton);
+  
+                  // Delete button
+                  const deleteButton = document.createElement("button");
+                  deleteButton.textContent = "Delete";
+                  deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+                  deleteButton.addEventListener("click", () => handleDelete(user.id)); // Replace handleDelete with your delete logic
+                  userDiv.appendChild(deleteButton);
+  
+                  userListElement.appendChild(userDiv);
+              });
+          } else {
+              throw new Error("Failed to fetch user list");
+          }
+      } catch (error) {
+          console.error("Error fetching user list:", error);
       }
-      else {
-        // Clear input fields on successful profile creation
-        document.getElementById("name").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("amount").value = "";
-        document.getElementById("password").value = "";
-      }
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  
-    loadingTextp.style.display = "none";
-    saveProfileButton.style.display = "inline-block";
-  };
-
-  async function updateUserList() {
-    const userListElement = document.getElementById("userList");
-
-    try {
-        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-        if (response.ok) {
-            const users = await response.json();
-
-            // Clear existing list items
-            userListElement.innerHTML = "";
-
-            // Add each user as a list item
-            users.forEach(user => {
-                const listItem = document.createElement("li");
-                listItem.textContent = `${user.name} - ${user.email} - ${user.amount}`;
-                userListElement.appendChild(listItem);
-            });
-        } else {
-            throw new Error("Failed to fetch user list");
-        }
-    } catch (error) {
-        console.error("Error fetching user list:", error);
-    }
-}
+  }
 
 // Initial update of user list
 
 
   // Check if the current page is the createprofile page
-  const isCreateProfilePage = window.location.pathname === "/createprofile.html";
+  const isCreateProfilePage = window.location.pathname.endsWith("/createprofile.html");
 
   if (isCreateProfilePage) {
     updateUserList();
@@ -544,4 +529,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Example edit and delete handlers
+function handleEdit(userId) {
+  console.log(`Edit user with ID: ${userId}`);
+  // Implement your edit logic here
+}
 
+function handleDelete(userId) {
+  console.log(`Delete user with ID: ${userId}`);
+  // Implement your delete logic here
+}

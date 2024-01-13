@@ -453,6 +453,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  const isCreateProfilePage = window.location.pathname === "/createprofile.html";
+
+    if (isCreateProfilePage) {
+      console.log("dashboard");
+      updateUserList();
+      // Attach the event listener only if it's the createprofile page
+      document.getElementById("profileForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default form submission
+        saveProfile(); // Call your custom function to handle the submission
+        updateUserList();
+      });
+    }
+    
   const saveProfile = async () => {
     const profile = {
       name: document.getElementById("name").value,
@@ -467,65 +480,54 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingTextp.style.display = "inline-block";
     saveProfileButton.style.display = "none";
 
-    // async function updateUserList() {
-    //   const userListElement = document.getElementById("userList");
+    async function updateUserList() {
+      const userListElement = document.getElementById("userList");
 
-    //   try {
-    //     const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-    //     if (response.ok) {
-    //       const users = await response.json();
+      try {
+        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+        if (response.ok) {
+          const users = await response.json();
 
-    //       // Clear existing content
-    //       userListElement.innerHTML = "";
+          // Clear existing content
+          userListElement.innerHTML = "";
 
-    //       // Add each user as a list item with edit and delete buttons
-    //       users.forEach((user) => {
-    //         const userDiv = document.createElement("div");
-    //         userDiv.classList.add("user-item");
+          // Add each user as a list item with edit and delete buttons
+          users.forEach((user) => {
+            const userDiv = document.createElement("div");
+            userDiv.classList.add("user-item");
 
-    //         // User data
-    //         const userData = document.createElement("p");
-    //         userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
-    //         userDiv.appendChild(userData);
+            // User data
+            const userData = document.createElement("p");
+            userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
+            userDiv.appendChild(userData);
 
-    //         // Edit button
-    //         const editButton = document.createElement("button");
-    //         editButton.textContent = "Edit";
-    //         editButton.classList.add("btn", "btn-primary", "btn-sm");
-    //         editButton.addEventListener("click", () => handleEdit(user.id)); // Replace handleEdit with your edit logic
-    //         userDiv.appendChild(editButton);
+            // Edit button
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("btn", "btn-primary", "btn-sm");
+            editButton.addEventListener("click", () => handleEdit(user.id)); // Replace handleEdit with your edit logic
+            userDiv.appendChild(editButton);
 
-    //         // Delete button
-    //         const deleteButton = document.createElement("button");
-    //         deleteButton.textContent = "Delete";
-    //         deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-    //         deleteButton.addEventListener("click", () => handleDelete(user.id)); // Replace handleDelete with your delete logic
-    //         userDiv.appendChild(deleteButton);
+            // Delete button
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+            deleteButton.addEventListener("click", () => handleDelete(user.id)); // Replace handleDelete with your delete logic
+            userDiv.appendChild(deleteButton);
 
-    //         userListElement.appendChild(userDiv);
-    //       });
-    //     } else {
-    //       throw new Error("Failed to fetch user list");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching user list:", error);
-    //   }
-    // }
+            userListElement.appendChild(userDiv);
+          });
+        } else {
+          throw new Error("Failed to fetch user list");
+        }
+      } catch (error) {
+        console.error("Error fetching user list:", error);
+      }
+    }
 
 
     // Check if the current page is the createprofile page
-    const isCreateProfilePage = window.location.pathname === "/createprofile.html";
-
-    if (isCreateProfilePage) {
-      console.log("dashboard");
-      updateUserList();
-      // Attach the event listener only if it's the createprofile page
-      document.getElementById("profileForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent default form submission
-        saveProfile(); // Call your custom function to handle the submission
-        updateUserList();
-      });
-    }
+    
   };
 });
 

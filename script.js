@@ -457,46 +457,50 @@ document.addEventListener("DOMContentLoaded", function () {
     const userListElement = document.getElementById("userList");
 
     try {
-      const response = await fetch("https://teslaxapi.onrender.com/api/profile");
-      if (response.ok) {
-        const users = await response.json();
+        const response = await fetch("https://teslaxapi.onrender.com/api/profile");
+        if (response.ok) {
+            const users = await response.json();
 
-        // Clear existing content
-        userListElement.innerHTML = "";
+            // Clear existing content
+            userListElement.innerHTML = "";
 
-        // Add each user as a list item with edit and delete buttons
-        users.forEach((user) => {
-          const userDiv = document.createElement("div");
-          userDiv.classList.add("user-item");
+            // Add each user as a list item with edit and delete buttons
+            users.forEach((user) => {
+                const userDiv = document.createElement("div");
+                userDiv.classList.add("user-item");
+                userDiv.style.marginBottom = "10px"; // Add spacing between user items
+                userDiv.style.padding = "10px"; // Add padding to user items
+                userDiv.style.border = "1px solid #ddd"; // Add border to user items
+                userDiv.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)"; // Add box shadow
 
-          // User data
-          const userData = document.createElement("p");
-          userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
-          userDiv.appendChild(userData);
+                // User data
+                const userData = document.createElement("p");
+                userData.textContent = `Name: ${user.name}, Email: ${user.email}, Amount: ${user.amount}, Password: ${user.password}`;
+                userDiv.appendChild(userData);
 
-          // Edit button
-          const editButton = document.createElement("button");
-          editButton.textContent = "Edit";
-          editButton.classList.add("btn", "btn-primary", "btn-sm");
-          editButton.addEventListener("click", () => handleEdit(user.id)); // Replace handleEdit with your edit logic
-          userDiv.appendChild(editButton);
+                // Edit button
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.classList.add("btn", "btn-primary", "btn-sm");
+                editButton.addEventListener("click", () => handleEdit(user._id)); // Replace handleEdit with your edit logic
+                userDiv.appendChild(editButton);
 
-          // Delete button
-          const deleteButton = document.createElement("button");
-          deleteButton.textContent = "Delete";
-          deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-          deleteButton.addEventListener("click", () => handleDelete(user.id)); // Replace handleDelete with your delete logic
-          userDiv.appendChild(deleteButton);
+                // Delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+                deleteButton.addEventListener("click", () => handleDelete(user._id)); // Replace handleDelete with your delete logic
+                userDiv.appendChild(deleteButton);
 
-          userListElement.appendChild(userDiv);
-        });
-      } else {
-        throw new Error("Failed to fetch user list");
-      }
+                userListElement.appendChild(userDiv);
+            });
+        } else {
+            throw new Error("Failed to fetch user list");
+        }
     } catch (error) {
-      console.error("Error fetching user list:", error);
+        console.error("Error fetching user list:", error);
     }
-  }
+}
 
   const saveProfile = async () => {
     const profile = {
@@ -544,7 +548,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const isCreateProfilePage = window.location.pathname === "/createprofile.html";
 
     if (isCreateProfilePage) {
-      console.log("dashboard");
+      console.log("Create Profile");
       updateUserList();
       // Attach the event listener only if it's the createprofile page
       document.getElementById("profileForm").addEventListener("submit", function (event) {
@@ -561,7 +565,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Implement your edit logic here
   }
 
-  function handleDelete(userId) {
-    console.log(`Delete user with ID: ${userId}`);
+  async function handleDelete(userId) {
+    const response = await fetch("https://teslaxapi.onrender.com/api/profile/userId");
+    console.log("User deleted");
+    alert("User deleted")
     // Implement your delete logic here
   }

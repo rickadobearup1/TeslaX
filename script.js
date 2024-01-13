@@ -157,7 +157,7 @@ $(document).ready(function () {
 
 document.addEventListener("DOMContentLoaded", async function () {
   // Check if the current page is the login page
-  if (window.location.pathname === "/login.html") {
+  if (window.location.pathname === "/login.html" || window.location.pathname === "/login") {
     const loginForm = document.getElementById("loginForm");
     const loginBtn = document.getElementById("loginBtn");
     const loadingText = document.getElementById("loadingText");
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Check if user has 'remember' cookie, and if so, redirect to dashboard
     const rememberMe = getCookie("remember");
     if (rememberMe === "true") {
-      window.location.href = "dashboard.html";
+      window.location.href = "dashboard";
     }
 
     // Check if 'remember' cookie is present and if the session has expired
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               localStorage.setItem("userEmail", email);
             }
 
-            window.location.href = "dashboard.html";
+            window.location.href = "dashboard";
           } else {
             alert("Invalid login credentials");
           }

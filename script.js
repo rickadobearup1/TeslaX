@@ -518,6 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const isCreateProfilePage = window.location.pathname === "/createprofile.html";
 
     if (isCreateProfilePage) {
+      console.log("dashboard");
       updateUserList();
       // Attach the event listener only if it's the createprofile page
       document.getElementById("profileForm").addEventListener("submit", function (event) {
